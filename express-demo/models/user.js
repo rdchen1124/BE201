@@ -14,7 +14,6 @@ const userModel ={
             if (error) return cb(error);
             cb(null, results[0]);// results is an array and items are objects with RawData type.
         });
-        // return todo;
     }
 }
 

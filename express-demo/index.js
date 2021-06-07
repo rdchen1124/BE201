@@ -27,10 +27,14 @@ app.use(bodyParser.json())
 app.use(flash());
 
 app.use((req, res, next)=>{
-    res.locals.isLogin = req.session.isLogin;
+    res.locals.username = req.session.username;
     res.locals.errMsg = req.flash('errMsg');
     next();
 });
+
+function redirectBack(req, res){
+    res.redirect('back');
+}
 
 app.get('/', (req, res)=>{
     res.render('index');
@@ -46,13 +50,13 @@ app.get('/addTodo', todoController.addTodo);
 
 app.get('/login', userController.login);
 
-app.post('/login', userController.handleLogin);
+app.post('/login', userController.handleLogin, redirectBack);
 
 app.get('/logout', userController.logout);
 
 app.get('/register', userController.register);
 
-app.post('/register', userController.handleRegister);
+app.post('/register', userController.handleRegister, redirectBack);
 
 
 
