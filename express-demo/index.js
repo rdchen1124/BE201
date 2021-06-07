@@ -6,7 +6,9 @@ const conn = require('./db');
 const app = express();
 const port = 5001;
 
-const todoController = require('./controllers/todo')
+const todoController = require('./controllers/todo');
+const userController = require('./controllers/user');
+const { render } = require('ejs');
 
 app.set('view engine', 'ejs');
 
@@ -30,6 +32,10 @@ app.use((req, res, next)=>{
     next();
 });
 
+app.get('/', (req, res)=>{
+    res.render('index');
+});
+
 app.post('/todos', todoController.newTodo);
 
 app.get('/todos', todoController.getAll);
@@ -38,24 +44,17 @@ app.get('/todos/:id', todoController.get);
 
 app.get('/addTodo', todoController.addTodo);
 
-app.get('/login', (req,res) => {
-    res.render('login');
-});
+app.get('/login', userController.login);
 
-app.get('/logout', (req,res)=>{
-    req.session.isLogin = false;
-    res.redirect('/addTodo');
-});
+app.post('/login', userController.handleLogin);
 
-app.post('/login', (req,res)=>{
-    if(req.body.password === '123'){
-        req.session.isLogin = true;
-        res.redirect('/addTodo');
-    }else{
-        req.flash('errMsg', 'Password uncorrect.');
-        res.redirect('/login');
-    }
-});
+app.get('/logout', userController.logout);
+
+app.get('/register', userController.register);
+
+app.post('/register', userController.handleRegister);
+
+
 
 app.listen(port, () => {
     conn.connect();
