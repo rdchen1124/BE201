@@ -1,0 +1,10 @@
+<h1>AddTodo</h1>
+<% if(!isLogin) { %>
+    <a href="/login">login</a>
+<% } else{ %>
+    <a href="/logout">logout</a>
+<% } %>
+<form method="POST" action="../todos">
+    Content : <input type='text' name='content' />
+    <input type='submit' />
+</form>
