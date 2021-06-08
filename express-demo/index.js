@@ -38,9 +38,6 @@ function redirectBack(req, res){
     res.redirect('back');
 }
 
-// app.get('/', (req, res)=>{
-//     res.render('index');
-// });
 app.get('/', commentController.index);
 
 app.post('/', commentController.add);
@@ -63,7 +60,7 @@ app.get('/register', userController.register);
 
 app.post('/register', userController.handleRegister, redirectBack);
 
-
+app.get('/delete_comment/:id', commentController.delete);
 
 app.listen(port, () => {
     conn.connect();

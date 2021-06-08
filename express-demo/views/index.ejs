@@ -15,4 +15,7 @@
 <% comments.forEach(function(comment){ %>
     <h2><%= comment.nickname %></h2>
     <span><%= comment.content %></span>
+    <% if(comment.username === username){ %>
+        <a href="/delete_comment/<%= comment.id %>">刪除</a>
+    <% } %>
 <% }); %>

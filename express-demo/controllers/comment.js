@@ -34,6 +34,23 @@ const commentController = {
                 comments: result
             });
         });
+    },
+    delete :(req, res)=>{
+        // 邏輯
+        const {id} = req.params;
+        const {username} = req.session;
+        if(!id || !username){
+            req.flash('errMsg', '刪除失敗，資料有缺失');
+            return res.redirect('/');
+        }
+        // 資料操作
+        commentModel.delete(id, username, (err)=>{
+            if(err){
+                req.flash('errMsg', err.toString())
+                return res.redirect('/');
+            }
+            res.redirect('/');
+        });
     }
 }
 
