@@ -8,6 +8,8 @@ const port = 5001;
 
 const todoController = require('./controllers/todo');
 const userController = require('./controllers/user');
+const commentController = require('./controllers/comment');
+
 const { render } = require('ejs');
 
 app.set('view engine', 'ejs');
@@ -36,9 +38,12 @@ function redirectBack(req, res){
     res.redirect('back');
 }
 
-app.get('/', (req, res)=>{
-    res.render('index');
-});
+// app.get('/', (req, res)=>{
+//     res.render('index');
+// });
+app.get('/', commentController.index);
+
+app.post('/', commentController.add);
 
 app.post('/todos', todoController.newTodo);
 
