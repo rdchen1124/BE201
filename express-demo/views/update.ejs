@@ -1,0 +1,6 @@
+<h1>編輯留言</h1>
+<h2><%= errMsg %></h2>
+<form method="POST" action="/update_comment">
+    <div> <textarea name="content"><%= comment.content %></textarea> </div>
+    <input type='submit' />
+</form>

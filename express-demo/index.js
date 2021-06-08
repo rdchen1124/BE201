@@ -11,6 +11,7 @@ const userController = require('./controllers/user');
 const commentController = require('./controllers/comment');
 
 const { render } = require('ejs');
+const commentModel = require('./models/comment');
 
 app.set('view engine', 'ejs');
 
@@ -61,6 +62,10 @@ app.get('/register', userController.register);
 app.post('/register', userController.handleRegister, redirectBack);
 
 app.get('/delete_comment/:id', commentController.delete);
+
+app.get('/update_comment/:id', commentController.update);
+
+// app.post('/update_comment/:id', commentController.handleUpdate);
 
 app.listen(port, () => {
     conn.connect();

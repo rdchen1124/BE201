@@ -35,7 +35,7 @@ const commentController = {
             });
         });
     },
-    delete :(req, res)=>{
+    delete : (req, res)=>{
         // 邏輯
         const {id} = req.params;
         const {username} = req.session;
@@ -50,6 +50,25 @@ const commentController = {
                 return res.redirect('/');
             }
             res.redirect('/');
+        });
+    },
+    update : (req, res)=>{
+        //邏輯
+        const {id} = req.params;
+        const {username} = req.session;
+        if(!id || !username){
+            req.flash('errMsg', '編輯失敗，資料有缺失');
+            return res.redirect('/');
+        }
+        //資料
+        commentModel.get(id, username, (err, results)=>{
+            if(err){
+                req.flash('errMsg', err.toString());
+                return res.redirect('/');
+            }
+            res.render('update',{
+                comment : results
+            });
         });
     }
 }
