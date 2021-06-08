@@ -70,7 +70,6 @@ const commentController = {
                 req.flash('errMsg', '您沒有權限編輯他人資訊');
                 return res.redirect('/');
             }
-            console.log("Result : ", results);
             res.render('update',{
                 comment : results
             });
