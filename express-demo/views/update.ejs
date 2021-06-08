@@ -1,6 +1,19 @@
-<h1>編輯留言</h1>
-<h2><%= errMsg %></h2>
-<form method="POST" action="/update_comment/<%= comment.id %>">
-    <div> <textarea name="content"><%= comment.content %></textarea> </div>
-    <input type='submit' />
-</form>
+<!DOCTYPE html>
+<html>
+    <head>
+        <%- include('template/header'); %>
+    </head>
+    <%- include('template/navbar'); %>
+    <div class="container">
+        <% if(errMsg && errMsg.length > 0){ %>
+            <div class="alert alert-danger" role="alert"> <%= errMsg %></div>
+        <% } %>
+        <form method="POST" action="/update_comment/<%= comment.id %>">
+            <div class="mb-3">
+                <label class="form-label">編輯留言</label>
+                <textarea name="content" class="col-sm-10 form-control"><%= comment.content %></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">送出留言</button>
+        </form>
+    </div>
+</html>

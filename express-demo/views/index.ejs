@@ -2,24 +2,33 @@
 <html>
     <head>
         <%- include('template/header'); %>
-        <%- include('template/navbar'); %>
     </head>
-    <h1>簡易會員註冊系統</h1>
-    <h2><%= errMsg %></h2>
-    <% if(username) { %>
-        Hi <%= username %>, 您已登入
-        <form method="POST" action="/">
-            <div> Comments : </div>
-            <div> <textarea name="content"></textarea> </div>
-            <input type='submit' />
-        </form>
-    <% } %>
-    <% comments.forEach(function(comment){ %>
-        <h2><%= comment.nickname %></h2>
-        <span><%= comment.content %></span>
-        <% if(comment.username === username){ %>
-            <a href="/update_comment/<%= comment.id %>">編輯</a>
-            <a href="/delete_comment/<%= comment.id %>">刪除</a>
+    <%- include('template/navbar'); %>
+    <div class="container">
+        <% if(errMsg && errMsg.length > 0){ %>
+            <div class="alert alert-danger" role="alert"> <%= errMsg %></div>
         <% } %>
-    <% }); %>
+        <% if(username) { %>
+            Hi <%= username %>, 您已登入
+            <form method="POST" action="/">
+                <div class="mb-3">
+                    <label class="form-label">留言內容 :</label>
+                    <textarea name="content" class="col-sm-10 form-control"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">送出留言</button>
+            </form>
+        <% } %>
+        <% comments.forEach(function(comment){ %>
+            <div class="card w-75 mt-2">
+                <div class="card-body">
+                    <h5 class="card-title"><%= comment.nickname %></h5>
+                    <p class="card-text"><%= comment.content %></p>
+                    <% if(comment.username === username){ %>
+                        <a href="/update_comment/<%= comment.id %>" class="card-link">編輯</a>
+                        <a href="/delete_comment/<%= comment.id %>" class="card-link">刪除</a>
+                    <% } %>
+                </div>
+            </div>
+        <% }); %>
+    </div>
 </html>
