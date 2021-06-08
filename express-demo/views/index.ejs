@@ -1,23 +1,25 @@
-<h1>簡易會員註冊系統</h1>
-<h2><%= errMsg %></h2>
-<% if(username) { %>
-    Hi <%= username %>, 您已登入
-    <a href="/logout">登出</a>
+<!DOCTYPE html>
+<html>
+    <head>
+        <%- include('template/header'); %>
+        <%- include('template/navbar'); %>
+    </head>
+    <h1>簡易會員註冊系統</h1>
     <h2><%= errMsg %></h2>
-    <form method="POST" action="/">
-        <div> Comments : </div>
-        <div> <textarea name="content"></textarea> </div>
-        <input type='submit' />
-    </form>
-<% } else{ %>
-    <a href="/register">註冊</a>
-    <a href="/login">登入</a>
-<% } %>
-<% comments.forEach(function(comment){ %>
-    <h2><%= comment.nickname %></h2>
-    <span><%= comment.content %></span>
-    <% if(comment.username === username){ %>
-        <a href="/update_comment/<%= comment.id %>">編輯</a>
-        <a href="/delete_comment/<%= comment.id %>">刪除</a>
+    <% if(username) { %>
+        Hi <%= username %>, 您已登入
+        <form method="POST" action="/">
+            <div> Comments : </div>
+            <div> <textarea name="content"></textarea> </div>
+            <input type='submit' />
+        </form>
     <% } %>
-<% }); %>
+    <% comments.forEach(function(comment){ %>
+        <h2><%= comment.nickname %></h2>
+        <span><%= comment.content %></span>
+        <% if(comment.username === username){ %>
+            <a href="/update_comment/<%= comment.id %>">編輯</a>
+            <a href="/delete_comment/<%= comment.id %>">刪除</a>
+        <% } %>
+    <% }); %>
+</html>
