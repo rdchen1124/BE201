@@ -65,7 +65,7 @@ app.get('/delete_comment/:id', commentController.delete);
 
 app.get('/update_comment/:id', commentController.update);
 
-// app.post('/update_comment/:id', commentController.handleUpdate);
+app.post('/update_comment/:id', commentController.handleUpdate);
 
 app.listen(port, () => {
     conn.connect();

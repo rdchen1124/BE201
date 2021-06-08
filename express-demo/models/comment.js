@@ -38,8 +38,18 @@ const commentModel ={
                 return cb(error);
             }
             cb(null);
-        }
-        )
+        })
+    },
+    update : (id, username, content, cb)=>{
+        conn.query(`
+        UPDATE simple_comments SET content = ? WHERE id = ? AND username = ? 
+        `,[content, id, username]
+        ,(error, results)=>{
+            if(error){
+                return cb(error);
+            }
+            cb(null);
+        });
     }
 }
 

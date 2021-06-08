@@ -57,7 +57,7 @@ const commentController = {
         const {id} = req.params;
         const {username} = req.session;
         if(!id || !username){
-            req.flash('errMsg', '編輯失敗，資料有缺失');
+            req.flash('errMsg', '編輯失敗，權限不足');
             return res.redirect('/');
         }
         //資料
@@ -66,10 +66,33 @@ const commentController = {
                 req.flash('errMsg', err.toString());
                 return res.redirect('/');
             }
+            if(Object.keys(results).length === 0){
+                req.flash('errMsg', '您沒有權限編輯他人資訊');
+                return res.redirect('/');
+            }
+            console.log("Result : ", results);
             res.render('update',{
                 comment : results
             });
         });
+    },
+    handleUpdate : (req, res)=>{
+        //邏輯
+        const {id} = req.params;
+        const {username} = req.session;
+        const {content} = req.body;
+        if(!id || !username || !content){
+            req.flash('errMsg', '資料有缺失，無法編輯留言');
+            return res.redirect('back');
+        }
+        //資料
+        commentModel.update(id, username, content, (err, results)=>{
+            if(err){
+                req.flash('errMsg', err.toString());
+                return res.redirect('/');
+            }
+            res.redirect('/');
+        })
     }
 }
 
