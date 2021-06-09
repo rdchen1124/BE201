@@ -33,17 +33,17 @@ const Comment = sequelize.define('seq_comments',{
 });
 // 建立 User 對 Comment 的連結 : 使用者可以有很多評論
 User.hasMany(Comment);
-
+Comment.belongsTo(User);
 //sequelize.sync().then() > 把上面定義好的資料表(User 對應的那個)產生出來
 //產生完後執行 then() 裡面的 cb()
 sequelize.sync().then(()=>{
     //do somthing with sequelize
-    User.findOne({
+    Comment.findOne({
         where : {
-            firstName: 'Ben'
+            content : '不繳不行!!!!!'
         },
-        include : Comment
+        include : User
     }).then(user=>{
-        console.log(JSON.stringify(user.seq_comments, null, 4));
+        console.log(JSON.stringify(user, null, 4));
     });
 });
