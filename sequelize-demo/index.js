@@ -37,8 +37,12 @@ const data = {
 sequelize.sync().then(()=>{
     //after create table, do somthing
     User.findOne({where : {
-        'lastName': 'Cena'
+        'firstName': 'Ben'
     }}).then(user=>{
-        console.log(JSON.stringify(user, null, 4));
+        user.update({
+            'lastName' : 'Stiller'
+        }).then(()=>{
+            console.log('updated !');
+        })
     });
 });
