@@ -23,26 +23,32 @@ const User = sequelize.define('seq_users',{
     lastName : {
         type: Sequelize.STRING,
     }
-},{
-    //options
 });
 
-const data = {
-    firstName: 'Morgan',
-    lastName : 'Freeman'
-};
+//new model for left join
+const Comment = sequelize.define('seq_comments',{
+    content : {
+        type: Sequelize.STRING,
+    }
+});
+// 建立 User 對 Comment 的連結 : 使用者可以有很多評論
+User.hasMany(Comment);
 
 //sequelize.sync().then() > 把上面定義好的資料表(User 對應的那個)產生出來
 //產生完後執行 then() 裡面的 cb()
 sequelize.sync().then(()=>{
+    Comment.create({
+        seqUserId : '5',
+        content : 'Mother FXXker.'
+    }).then(()=>{
+        console.log('Comment create!')
+    });
     //after create table, do somthing
-    User.findOne({where : {
-        'firstName': 'Ben'
-    }}).then(user=>{
-        user.update({
-            'lastName' : 'Stiller'
-        }).then(()=>{
-            console.log('updated !');
-        })
+    User.findOne({
+        where : {
+            firstName: 'Ben'
+        }
+    }).then(user=>{
+        // console.log(user);
     });
 });
