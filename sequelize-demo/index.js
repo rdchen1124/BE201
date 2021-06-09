@@ -36,9 +36,9 @@ const data = {
 //產生完後執行 then() 裡面的 cb()
 sequelize.sync().then(()=>{
     //after create table, do somthing
-    User.findAll({where : {
-        'firstname': 'John'
-    }}).then(users=>{
-        console.log(JSON.stringify(users, null, 4));
+    User.findOne({where : {
+        'lastName': 'Cena'
+    }}).then(user=>{
+        console.log(JSON.stringify(user, null, 4));
     });
 });
