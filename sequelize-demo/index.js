@@ -33,10 +33,10 @@ const data = {
 };
 
 //sequelize.sync().then() > 把上面定義好的資料表(User 對應的那個)產生出來
-//產生完後執行 then 裡面的 cb()
+//產生完後執行 then() 裡面的 cb()
 sequelize.sync().then(()=>{
     //after create table, do somthing
-    User.create(data).then(()=>{
-        console.log('created');
+    User.findAll().then(users=>{
+        console.log('All Stars', JSON.stringify(users, null, 4));
     });
 });
