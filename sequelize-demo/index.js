@@ -37,18 +37,13 @@ User.hasMany(Comment);
 //sequelize.sync().then() > 把上面定義好的資料表(User 對應的那個)產生出來
 //產生完後執行 then() 裡面的 cb()
 sequelize.sync().then(()=>{
-    Comment.create({
-        seqUserId : '5',
-        content : 'Mother FXXker.'
-    }).then(()=>{
-        console.log('Comment create!')
-    });
-    //after create table, do somthing
+    //do somthing with sequelize
     User.findOne({
         where : {
             firstName: 'Ben'
-        }
+        },
+        include : Comment
     }).then(user=>{
-        // console.log(user);
+        console.log(JSON.stringify(user.seq_comments, null, 4));
     });
 });
