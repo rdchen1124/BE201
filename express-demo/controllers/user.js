@@ -1,6 +1,7 @@
-const userModel = require('../models/user');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+const db = require('../models');
+const User = db.User;
 
 const userController = {
     login : (req, res)=>{
@@ -12,13 +13,12 @@ const userController = {
             req.flash('errMsg', '請填妥所有資料');
             return next();
         }
-        // get user from database with get method of userModel
-        userModel.get(username, (error, user)=>{
-            if (error){
-                req.flash('errMsg', error.toString());
-                return next();
+        User.findOne({
+            where: {
+                username
             }
-            if (!user){
+        }).then((user)=>{
+            if(!user){
                 req.flash('errMsg', '錯誤的使用者');
                 return next();
             }
@@ -29,10 +29,13 @@ const userController = {
                     return next();
                 }
                 req.session.username = username;
+                req.session.userId = user.id;//關聯 user & comments table
                 res.redirect('/');//注意 res 不能跟 isSuccess 同名，不然值會被蓋掉
             });
+        }).catch((error)=>{
+            req.flash('errMsg', error.toString());
+            return next();
         });
-        
     },
     register : (req, res)=>{
         res.render('user/register');
@@ -50,17 +53,17 @@ const userController = {
                 req.flash('errMsg',error.toString());
                 return next();
             };
-            userModel.add({
+            User.create({
                 username,
                 nickname,
                 password: hash
-            }, (error)=>{
-                if(error) {
-                    req.flash('errMsg', error.toString());
-                    return next();
-                }
+            }).then(user =>{//可以拿到執行個體
                 req.session.username = username;
+                req.session.userId = user.id;//怎麼拿到 user id
                 res.redirect('/');
+            }).catch(error =>{
+                req.flash('errMsg', error.toString());
+                return next();
             })
         });
         

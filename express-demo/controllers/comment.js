@@ -1,95 +1,81 @@
 const commentModel = require('../models/comment');
-
+const db = require('../models');
+const Comment = db.Comment;
+const User = db.User;
 
 const commentController = {
     add : (req, res)=>{
         //1. 邏輯
         const {content} = req.body;
-        const {username} = req.session;
-        if(!content || !username){
+        const {userId} = req.session;
+        if(!content){
             req.flash('errMsg', '請填妥留言內容');
             return res.redirect('/');
         }
         //2. 拿資料
-        commentModel.add({
-            username,
-            content
-        },(err)=>{
-            if(err){
-                req.flash('errMsg', err.toString());
-                return res.redirect('/');
-            }
+        Comment.create({
+            content,
+            UserId : userId
+        }).then(()=>{
             res.redirect('/');
-        });
+        })
     },
     index : (req, res)=>{
         //1. 邏輯 (因為是首頁，不需要判斷 username 等參數， step2 也不需要其他資訊，所以直接撈資料出來就好)
         //2. 拿資料
-        commentModel.getAll((err, result)=>{
-            if(err){
-                req.flash('errMsg', err.toString());
-                return res.redirect('/');
-            }
+        Comment.findAll({
+            include: User//沒有 include 就拿不到關聯的 User 資料
+        }).then((results)=>{
             res.render('index',{
-                comments: result
+                comments: results
             });
-        });
+        })
+
     },
     delete : (req, res)=>{
         // 邏輯
-        const {id} = req.params;
-        const {username} = req.session;
-        if(!id || !username){
-            req.flash('errMsg', '刪除失敗，資料有缺失');
-            return res.redirect('/');
-        }
         // 資料操作
-        commentModel.delete(id, username, (err)=>{
-            if(err){
-                req.flash('errMsg', err.toString())
-                return res.redirect('/');
+        Comment.findOne({
+            where: {
+                id: req.params.id,
+                UserId: req.session.userId
             }
-            res.redirect('/');
-        });
+        }).then(comment=>{
+            return comment.destroy()//因為這會回傳 Promise，意思是將回傳出來的 Promise 再回傳，讓下組 then()、catch() 做處理
+        }).then(()=>{
+            res.redirect('/')
+        }).catch(error=>{
+            req.flash('errMsg',error.toString());
+            res.redirect('/')
+        })
     },
     update : (req, res)=>{
-        //邏輯
-        const {id} = req.params;
-        const {username} = req.session;
-        if(!id || !username){
-            req.flash('errMsg', '編輯失敗，權限不足');
-            return res.redirect('/');
-        }
         //資料
-        commentModel.get(id, username, (err, results)=>{
-            if(err){
-                req.flash('errMsg', err.toString());
-                return res.redirect('/');
+        Comment.findOne({
+            where: {
+                id: req.params.id,
+                UserId: req.session.userId
             }
-            if(Object.keys(results).length === 0){
-                req.flash('errMsg', '您沒有權限編輯他人資訊');
-                return res.redirect('/');
-            }
+        }).then(comment=>{
             res.render('update',{
-                comment : results
+                comment
             });
-        });
+        })
     },
     handleUpdate : (req, res)=>{
         //邏輯
-        const {id} = req.params;
-        const {username} = req.session;
-        const {content} = req.body;
-        if(!id || !username || !content){
-            req.flash('errMsg', '資料有缺失，無法編輯留言');
-            return res.redirect('back');
-        }
         //資料
-        commentModel.update(id, username, content, (err, results)=>{
-            if(err){
-                req.flash('errMsg', err.toString());
-                return res.redirect('/');
+        Comment.update({
+            content: req.body.content
+        },{
+            where: {
+                id: req.params.id,
+                UserId: req.session.userId
             }
+        }).then(()=>{
+            res.redirect('/');
+        }).catch(error=>{
+            req.flash('errMsg',error.toString());
             res.redirect('/');
         })
     }
