@@ -2,11 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const flash = require('connect-flash');
-// const conn = require('./db');
 const app = express();
 const port = 5001;
 
-const todoController = require('./controllers/todo');
 const userController = require('./controllers/user');
 const commentController = require('./controllers/comment');
 
@@ -43,14 +41,6 @@ app.get('/', commentController.index);
 
 app.post('/', commentController.add);
 
-app.post('/todos', todoController.newTodo);
-
-app.get('/todos', todoController.getAll);
-//url with id
-app.get('/todos/:id', todoController.get);
-
-app.get('/addTodo', todoController.addTodo);
-
 app.get('/login', userController.login);
 
 app.post('/login', userController.handleLogin, redirectBack);
@@ -68,6 +58,5 @@ app.get('/update_comment/:id', commentController.update);
 app.post('/update_comment/:id', commentController.handleUpdate);
 
 app.listen(port, () => {
-    conn.connect();
     console.log(`Example app listening at http://localhost:${port}`)
 })
