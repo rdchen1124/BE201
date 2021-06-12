@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const flash = require('connect-flash');
-const conn = require('./db');
+// const conn = require('./db');
 const app = express();
 const port = 5001;
 
