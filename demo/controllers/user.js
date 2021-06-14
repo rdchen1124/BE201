@@ -1,6 +1,6 @@
 const userController = {
     login: (req,res)=>{
-        res.render('user/index');
+        res.render('user/login');
     },
     register: (req,res)=>{
         res.render('user/register');
