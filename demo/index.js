@@ -6,6 +6,7 @@ const app = express();
 const port = 5001;
 
 const userController = require('./controllers/user');
+const commentController = require('./controllers/comment');
 
 const { render } = require('ejs');
 
@@ -29,9 +30,11 @@ app.use(bodyParser.json())
 //設定 middleware : connect-flash
 app.use(flash());
 
-app.get('/',(req, res)=>{
-    res.send('Hello');
-});
+app.get('/', commentController.index);
+
+app.get('/login', userController.login);
+
+app.get('/register', userController.register);
 
 app.listen(port,()=>{
     console.log(`My Express app listening at http://localhost:${port}`)

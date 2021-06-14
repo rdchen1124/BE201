@@ -1,8 +1,9 @@
 const userController = {
-    add: (req,res)=>{
-        
+    login: (req,res)=>{
+        res.render('user/index');
     },
-    get: (req,res)=>{
-        
+    register: (req,res)=>{
+        res.render('user/register');
     }
 }
+module.exports = userController;
