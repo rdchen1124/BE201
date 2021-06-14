@@ -7,6 +7,11 @@ const port = 5001;
 
 const userController = require('./controllers/user');
 
+const { render } = require('ejs');
+
+//設定 middleware : ejs
+app.set('view engine','ejs');
+
 //設定 middleware : express-session
 app.use(session({
   secret: 'keyboard cat',

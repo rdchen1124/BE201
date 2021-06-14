@@ -8,3 +8,5 @@ npm install body-parser
 npm install express-session
 @REM 安裝 connect-flash
 npm install connect-flash
+@REM 安裝 ejs
+npm install ejs --save
