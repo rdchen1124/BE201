@@ -10,3 +10,12 @@ npm install express-session
 npm install connect-flash
 @REM 安裝 ejs
 npm install ejs --save
+@REM 安裝 bcrypt
+npm install bcrypt
+@REM 安裝 sequelize
+npm install --save sequelize
+@REM 安裝 mysql2 for 連接 mysql 資料庫
+npm install --save mysql2
+@REM 安裝 sequelize CLI for 依指令建立資料表及對應 model
+npm install --save-dev sequelize-cli
+@REM 初始化 sequelize Project
