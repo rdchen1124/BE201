@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const flash = require('connect-flash');
 const app = express();
 const port = 5001;
 
@@ -19,6 +20,9 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 // parse application/json
 app.use(bodyParser.json())
+
+//設定 middleware : connect-flash
+app.use(flash());
 
 app.get('/',(req, res)=>{
     res.send('Hello');

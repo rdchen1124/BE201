@@ -6,3 +6,5 @@ npm install express --save
 npm install body-parser
 @REM 安裝 express-session
 npm install express-session
+@REM 安裝 connect-flash
+npm install connect-flash
