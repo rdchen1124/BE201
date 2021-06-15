@@ -19,3 +19,8 @@ npm install --save mysql2
 @REM 安裝 sequelize CLI for 依指令建立資料表及對應 model
 npm install --save-dev sequelize-cli
 @REM 初始化 sequelize Project
+npx sequelize-cli init
+@REM 新增 user 資料表在 be201_demo
+npx sequelize-cli model:generate --name User --attributes username:string,nickname:string,password:string
+@REM 觸發 migration 建立 User 資料表
+npx sequelize-cli db:migrate

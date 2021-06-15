@@ -30,11 +30,19 @@ app.use(bodyParser.json())
 //設定 middleware : connect-flash
 app.use(flash());
 
+app.use((req,res,next)=>{
+  res.locals.username = req.session.username;
+  res.locals.errMsg = req.flash('errMsg');
+  next();
+})
+
 app.get('/', commentController.index);
 
 app.get('/login', userController.login);
 
 app.get('/register', userController.register);
+
+app.post('/register', userController.handleRegister);
 
 app.listen(port,()=>{
     console.log(`My Express app listening at http://localhost:${port}`)
