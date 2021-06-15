@@ -40,9 +40,13 @@ app.get('/', commentController.index);
 
 app.get('/login', userController.login);
 
+app.post('/login', userController.handleLogin);
+
 app.get('/register', userController.register);
 
 app.post('/register', userController.handleRegister);
+
+app.get('/logout', userController.logout);
 
 app.listen(port,()=>{
     console.log(`My Express app listening at http://localhost:${port}`)

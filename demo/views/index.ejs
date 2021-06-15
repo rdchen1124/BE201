@@ -5,6 +5,10 @@
     </head>
     <%- include('template/navbar') %>
     <div class='container'>
-
+        <% if(username){ %>
+            <span>Hi <%- username %>, 您已登入 </span>
+        <% }else{ %>
+            <span>Hi guest, 您尚未登入</span>
+        <% } %>
     </div>
 </html>
