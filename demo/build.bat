@@ -28,3 +28,9 @@ npx sequelize-cli db:migrate
 npx sequelize-cli model:generate --name Comment --attributes comment:text,UserId:integer
 @REM 觸發 migration 建立 Comment 資料表在 mysql 資料庫
 npx sequelize-cli db:migrate
+@REM Undo Migration 清除 Comment 資料表 : 因為 comment 的欄位錯了 應該要是 content 打成了 comment
+npx sequelize-cli db:migrate:undo
+@REM 修正 cooment 資料表 欄位 comment to content
+npx sequelize-cli model:generate --name Comment --attributes content:text,UserId:integer --force
+@REM 觸發 migration 重新建立 Comment 資料表在 mysql 資料庫
+npx sequelize-cli db:migrate

@@ -38,6 +38,8 @@ app.use((req,res,next)=>{
 
 app.get('/', commentController.index);
 
+app.post('/', commentController.add);
+
 app.get('/login', userController.login);
 
 app.post('/login', userController.handleLogin);
