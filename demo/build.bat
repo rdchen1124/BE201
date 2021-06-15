@@ -22,5 +22,9 @@ npm install --save-dev sequelize-cli
 npx sequelize-cli init
 @REM 新增 user 資料表在 be201_demo
 npx sequelize-cli model:generate --name User --attributes username:string,nickname:string,password:string
-@REM 觸發 migration 建立 User 資料表
+@REM 觸發 migration 建立 User 資料表在 mysql 資料庫
+npx sequelize-cli db:migrate
+@REM 新增 cooment 資料表在 be201_demo
+npx sequelize-cli model:generate --name Comment --attributes comment:text,UserId:integer
+@REM 觸發 migration 建立 Comment 資料表在 mysql 資料庫
 npx sequelize-cli db:migrate
