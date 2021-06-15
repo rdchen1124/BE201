@@ -35,6 +35,23 @@ const commentController = {
             return res.redirect('/');
         })
     }
+    ,delete : (req,res)=>{
+        const {id} = req.params;
+        const UserId = req.session.userId;
+        Comment.findOne({
+            where: {
+                id,
+                UserId
+            }
+        }).then(comment=>{
+            return comment.destroy();
+        }).then(()=>{
+            res.redirect('/');
+        }).catch(error=>{
+            req.flash('errMsg',error.toString());
+            return res.redirect('/');
+        });
+    }
 }
 
 module.exports = commentController;
