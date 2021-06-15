@@ -5,8 +5,8 @@
     </head>
     <%- include('template/navbar') %>
     <div class='container'>
+        <h2><%= errMsg %></h2>
         <% if(username){ %>
-            <h2><%= errMsg %></h2>
             <span>Hi <%- username %>, 您已登入 </span>
             <form method="POST" action='/'>
                 <div class="mb-3 row">
@@ -19,6 +19,15 @@
             </form>
         <% }else{ %>
             <span>Hi guest, 您尚未登入</span>
+        <% } %>
+        <% if(comments){ %> 
+            <% comments.forEach(comment=>{ %>
+                <div>
+                    <span><%= comment.User.nickname %></span>
+                    <p><%= comment.content %></p>
+                    
+                </div>
+            <% }) %>
         <% } %>
     </div>
 </html>

@@ -20,7 +20,20 @@ const commentController = {
         })
     }
     ,index: (req,res)=>{
-        res.render('index');
+        //撈出 Comment left join User 的所有資料
+        Comment.findAll({
+            order: [
+                ['id','DESC']
+            ],
+            include : User
+        }).then(results=>{
+            res.render('index',{
+                comments : results
+            })
+        }).catch(error=>{
+            req.flash('errMsg', error.toString());
+            return res.redirect('/');
+        })
     }
 }
 
