@@ -36,7 +36,7 @@
             <% comments.forEach(comment=>{ %>
                 <div class="card mb-3 col-sm-10 m-auto">
                     <div class="card-header">
-                        <span><%= comment.User.nickname %></span>
+                        <span><%= comment.User.nickname %></span> <span>(@<%= comment.User.username %>)</span>
                     </div>
                     <div class="card-body">
                         <p class="card-text"><%= comment.content %></p>

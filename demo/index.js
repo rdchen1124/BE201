@@ -42,6 +42,10 @@ app.post('/', commentController.add);
 
 app.get('/delete/:id', commentController.delete);
 
+app.get('/update/:id', commentController.update);
+
+app.post('/update/:id', commentController.handleUpdate);
+
 app.get('/login', userController.login);
 
 app.post('/login', userController.handleLogin);

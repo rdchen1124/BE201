@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <%- include('template/header') %>
+    </head>
+    <%- include('template/navbar') %>
+    <div class='container'>
+        <% if(errMsg && errMsg.length > 0){ %>
+            <div class="alert alert-danger col-sm-10 m-auto mb-3" role="alert"><%= errMsg %></div>
+        <% } %>
+        <div class="card my-3 col-sm-10 m-auto">
+            <div class="card-header bg-primary text-white">
+                <span>編輯留言</span>
+            </div>
+            <div class="card-body">
+                <form method="POST" action='/update/<%= comment.id %>'>
+                    <div class="mb-3 row">
+                        <div class="col">
+                            <textarea name="content" class="form-control"><%= comment.content %></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-outline-primary mb-3 form-control">送出留言</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</html>
